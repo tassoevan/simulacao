@@ -1,7 +1,9 @@
+const calculus = require('./calculus.js');
+
 const context = {
   variables: {
     F1: 2,
-    F2: Number.EPSILON,
+    F2: 1,
     F3: 1
   },
   equations: [
@@ -28,8 +30,18 @@ const grad = (f, context) => x => {
     });
 };
 
-const J = context => x =>
-  context.equations.map(equation => grad(equation, context)(x));
+const J = context => x => {
+  const F = context.equations.map(
+    equation => X => equation(
+      Object.keys(x).reduce(
+        (obj, k, i) => Object.assign(obj, { [k]: X[i] }), {}
+      )
+    )
+  );
+  const X = Object.keys(x).map(k => x[k]);
+  console.log(calculus.J(F)(X));
+  return calculus.J(F)(X);
+}
 
 const submatrix = (matrix, i, j) =>
   matrix.slice(0, i)
@@ -109,37 +121,3 @@ console.log('Error before:', error(context)(context.variables));
 const solution = solve(context);
 console.log(solution);
 console.log('Error after:', error(context)(solution));
-
-/*
-const solve = (context, guesses) => {
-  let error, iterations = 0;
-  do {
-    Object.keys(solution).forEach(unknown => {
-      const f = context.equations[0](v);
-
-      let step;
-
-      const v_ = Object.assign({}, v);
-      v_[unknown] = (1 + 1e-8)*v[unknown];
-      const df = context.equations[0](v_) - context.equations[0](v);
-      const dx = v_[unknown] - v[unknown];
-      step = df > 0 ? dx/df : 1;
-
-      solution[unknown] = v[unknown] - step*f;
-    });
-
-    Object.keys(solution).forEach(unknown => {
-      v[unknown] = solution[unknown];
-    });
-
-    error = context.equations[0](v);
-  }
-  while (Math.abs(error) > 1e-8);
-
-  console.log('Solution:', solution);
-  console.log('Error:', error);
-  console.log('Iterations:', iterations);
-};
-
-solve(context);
-*/
