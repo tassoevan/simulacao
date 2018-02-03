@@ -1,0 +1,16 @@
+{
+  "name": "@tassoevan/simulation",
+  "version": "1.0.0",
+  "main": "dist/simulation.js",
+  "repository": "https://github.com/tassoevan/simulation.git",
+  "author": "Tasso Evangelista <tasso@tassoevan.me>",
+  "license": "MIT",
+  "devDependencies": {
+    "chalk": "^2.3.0",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack --watch --hide-modules"
+  }
+}
