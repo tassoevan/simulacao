@@ -27,8 +27,12 @@ export default class System {
     return this;
   }
 
-  equation(left, right) {
-    this.equations.push(V => left(V) - right(V));
+  equation(eq) {
+    this.equations.push(eq);
     return this;
+  }
+
+  freedom() {
+    return Object.keys(this.indeterminates).length - this.equations.length;
   }
 }
