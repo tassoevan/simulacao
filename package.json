@@ -6,6 +6,9 @@
   "author": "Tasso Evangelista <tasso@tassoevan.me>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/preset-env": "^7.0.0-beta.39",
+    "babel-loader": "8.0.0-beta.0",
     "chalk": "^2.3.0",
     "webpack": "^3.10.0"
   },

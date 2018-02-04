@@ -28,5 +28,23 @@ module.exports = (env, args) => ({
     path: path.resolve(__dirname, 'dist'),
     filename: 'simulation.js'
   },
-  plugins: [ afterBundlePlugin ]
+  plugins: [ afterBundlePlugin ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [ '@babel/preset-env', { shippedProposals: true } ]
+              ],
+            },
+          },
+        ],
+        include: path.resolve('./src'),
+      },
+    ],
+  }
 });
