@@ -1,10 +1,22 @@
-export default class System {
+const X_prime = (X, system) => ({
+  ...system.parameters,
+  //todo: specifications
+  //todo: perturbations
+  ...X
+});
+
+export default class System extends Function {
   constructor() {
-    this.indeterminates = {};
-    this.parameters = {};
-    this.specifications = [];
-    this.perturbations = [];
-    this.equations = [];
+    const instance = X => instance.eval(X);
+    Object.setPrototypeOf(instance, System.prototype);
+
+    instance.indeterminates = {};
+    instance.parameters = {};
+    instance.specifications = [];
+    instance.perturbations = [];
+    instance.equations = [];
+
+    return instance;
   }
 
   indeterminate(name, minValue = Number.MIN_VALUE, maxValue = Number.MAX_VALUE) {
@@ -34,5 +46,9 @@ export default class System {
 
   freedom() {
     return Object.keys(this.indeterminates).length - this.equations.length;
+  }
+
+  eval(X) {
+    return this.equations.map(equation => equation(X_prime(X, this)));
   }
 }

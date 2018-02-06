@@ -34,3 +34,11 @@ system
   .equation(({ A, r }) => A - PI * pow(r, 2))
   ;
 dumpSystem(system);
+
+const X_guess = {
+  r: 0,
+  A: 0
+};
+
+console.log('Value: [' + system(X_guess).join(', ') + ']');
+
